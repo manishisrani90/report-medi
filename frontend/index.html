@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAnalyze - AI Medical Report Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <h1>MedAnalyze</h1>
+            </div>
+            <p class="tagline">AI-Powered Medical Report Analysis</p>
+        </header>
+
+        <div class="disclaimer-box">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            <div>
+                <strong>Important Notice:</strong> This AI analysis is for informational purposes only and does not constitute medical advice. Always consult qualified healthcare professionals.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Patient Information</h2>
+            <form id="analysisForm">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" required placeholder="Enter patient's full name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age <span class="required">*</span></label>
+                        <input type="number" id="age" required min="1" max="120" placeholder="Enter age">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City <span class="required">*</span></label>
+                        <input type="text" id="city" required placeholder="Enter city">
+                    </div>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="reportText">Describe Your Medical Report <span class="required">*</span></label>
+                    <textarea id="reportText" rows="6" placeholder="Example: Blood test shows elevated glucose levels (150 mg/dL), HbA1c at 7.2%, cholesterol at 220 mg/dL..." required></textarea>
+                    <small>Provide details from your medical report including test results, values, and observations</small>
+                </div>
+
+                <button type="submit" class="btn-primary" id="analyzeBtn">
+                    <span id="btnText">Analyze Medical Report</span>
+                    <span id="btnLoader" class="loader hidden"></span>
+                </button>
+            </form>
+        </div>
+
+        <div id="resultsSection" class="hidden">
+            <div class="results-header">
+                <h2>Analysis Results</h2>
+                <div class="action-buttons">
+                    <button onclick="window.print()" class="btn-secondary">Print</button>
+                    <button onclick="resetForm()" class="btn-secondary">New Analysis</button>
+                </div>
+            </div>
+
+            <div class="patient-info-card">
+                <h3>Patient Information</h3>
+                <div class="patient-details">
+                    <div><strong>Name:</strong> <span id="patientName"></span></div>
+                    <div><strong>Age:</strong> <span id="patientAge"></span> years</div>
+                    <div><strong>City:</strong> <span id="patientCity"></span></div>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="card result-card">
+                    <div class="card-header">
+                        <h3>Identified Symptoms</h3>
+                    </div>
+                    <ul id="symptomsList" class="symptoms-list"></ul>
+                </div>
+
+                <div class="card result-card">
+                    <div class="card-header">
+                        <h3>Possible Conditions</h3>
+                    </div>
+                    <div class="warning-box">
+                        <strong>Note:</strong> This is not a medical diagnosis.
+                    </div>
+                    <div id="conditionsList"></div>
+                </div>
+            </div>
+
+            <div class="card result-card full-width">
+                <div class="card-header">
+                    <h3>Medication Suggestions</h3>
+                </div>
+                <div class="error-box">
+                    <strong>Important:</strong> Consult a physician before taking any medication.
+                </div>
+                <div id="medicationsList" class="medications-table"></div>
+            </div>
+
+            <div class="card result-card full-width">
+                <div class="card-header">
+                    <h3>Dietary Recommendations</h3>
+                </div>
+                <div class="diet-grid">
+                    <div>
+                        <h4 class="diet-section-title recommended">Foods to Include</h4>
+                        <ul id="recommendedFoods" class="diet-list"></ul>
+                    </div>
+                    <div>
+                        <h4 class="diet-section-title avoid">Foods to Avoid</h4>
+                        <ul id="avoidFoods" class="diet-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card result-card full-width">
+                <div class="card-header">
+                    <h3>Recommended Specialists</h3>
+                </div>
+                <div id="doctorsList" class="doctors-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-card">
+            <div class="spinner"></div>
+            <h3>Analyzing Medical Report</h3>
+            <p>Please wait...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
